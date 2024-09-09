@@ -1,6 +1,4 @@
 const mongoose=require("mongoose");
-import { nanoid } from 'nanoid'
-import { type } from 'os';
 const urlSchema= new mongoose.Schema({
     UrlId:{
       type:String,
@@ -12,4 +10,4 @@ const urlSchema= new mongoose.Schema({
         required:true
     },
 })
-module.export=new mongoose.model("urls",urlSchema)
+module.exports=new mongoose.model("urls",urlSchema)

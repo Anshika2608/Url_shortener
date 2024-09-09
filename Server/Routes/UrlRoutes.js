@@ -1,6 +1,8 @@
-const submitUrl = require("../Controller/UrlController");
+const express = require('express');
+const submitUrl = require('../Controller/UrlController');
 
-const express=require(express);
-const router=express.router();
-router.post("/submitUrl",submitUrl);
-module.exports=router;
+const router = express.Router();
+
+router.post('/submitUrl', submitUrl);
+
+module.exports = router;
