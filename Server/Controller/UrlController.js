@@ -1,4 +1,4 @@
-const urlModel=require("../Models/UrlModel")
+const urls=require("../Models/UrlModel")
 const submitUrl = async (req, res) => {
     try {
         const { url } = req.body;
@@ -7,15 +7,38 @@ const submitUrl = async (req, res) => {
         }
 
 
-        const newUrl = new urlModel({
+        const newUrl = new urls({
             
             redirectUrl: url
         });
 
-        await newUrl.save();
-        return res.status(201).json({ message: 'Short URL successfully created' });
+        const savedUrl=await newUrl.save();
+        return res.status(201).json({ message: 'Short URL successfully created', urlId:savedUrl.UrlId });
     } catch (err) {
         return res.status(500).json({ message: 'Error while generating the short URL', error: err.message });
     }
 };
-module.exports=submitUrl
+
+const redirectOriginal = async (req, res) => {
+    try {
+        const { urlId } = req.query; // Access urlId from query parameters
+        
+        // Find the URL entry using UrlId
+        const urlEntry = await urls.findOne({ UrlId: urlId });
+
+        if (!urlEntry) {
+            return res.status(404).json({ message: 'URL not found' });
+        }
+
+        const redirectUrl = urlEntry.redirectUrl;
+        if (!redirectUrl.startsWith('http://') && !redirectUrl.startsWith('https://')) {
+            return res.status(400).json({ message: 'Invalid redirect URL format' });
+        }
+        console.log('Redirecting to:', redirectUrl);
+        res.redirect(redirectUrl);
+    } catch (error) {
+        console.error('Error while redirecting to original URL:', error);
+        return res.status(500).json({ message: 'Error while redirecting to the original URL', error: error.message });
+    }
+};
+module.exports={submitUrl,redirectOriginal}
