@@ -6,7 +6,6 @@ const submitUrl = async (req, res) => {
             return res.status(400).json({ message: 'URL is required!' });
         }
 
-
         const newUrl = new urls({
             
             redirectUrl: url
@@ -21,9 +20,8 @@ const submitUrl = async (req, res) => {
 
 const redirectOriginal = async (req, res) => {
     try {
-        const { urlId } = req.query; // Access urlId from query parameters
+        const { urlId } = req.params;
         
-        // Find the URL entry using UrlId
         const urlEntry = await urls.findOne({ UrlId: urlId });
 
         if (!urlEntry) {
