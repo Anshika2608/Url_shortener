@@ -5,7 +5,6 @@ function InputComponent() {
   const [urlId, setUrlId] = useState("")
   const handleSubmit = async () => {
     try {
-      console.log("Submitting URL:", { url });
       const response = await axios.post("https://url-shortener-yj9n.onrender.com/submitUrl", { url });
       setUrlId(response.data.urlId)
       setUrl("")

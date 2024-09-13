@@ -6,8 +6,6 @@ function App() {
       <div className='flex w-screen h-screen justify-center items-center '>
         <InputComponent />
       </div>
-
-
     </>
   )
 }
