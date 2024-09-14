@@ -6,14 +6,12 @@ function App() {
   return (
     <>
     <div className='App'>
-      <ParticlesComponent id="particles"/>
-      {/* <img src={logo} className='h-28 w-56 z-10'/> */}
+      <ParticlesComponent id="particles" />
       <div >
       <img src={logo} className='h-28 w-56 z-10 '/>
 
-        <div className='flex justify-center items-center w-full h-screen -mt-44'>
+        <div className='flex justify-center items-center  h-screen -mt-36'>
         <InputComponent/>
-
         </div>
       </div>
     </div>
