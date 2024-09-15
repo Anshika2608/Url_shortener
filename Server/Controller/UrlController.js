@@ -5,7 +5,9 @@ const submitUrl = async (req, res) => {
         if (!url) {
             return res.status(400).json({ message: 'URL is required!' });
         }
-
+        if((!url.startsWith('http://')) && (!url.startsWith("https://"))){
+            return res.status(400).json({message:"URL must be start with http:// or https://"})
+        }
         const newUrl = new urls({
             
             redirectUrl: url
