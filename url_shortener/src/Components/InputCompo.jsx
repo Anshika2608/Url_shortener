@@ -5,17 +5,17 @@ function InputComponent() {
   const [url, setUrl] = useState('');
   const [urlId, setUrlId] = useState('');
   const [loading, setLoading] = useState(false);
-  const [message,setMessage]=useState("")
+  const [message, setMessage] = useState("")
   const handleSubmit = async () => {
     setLoading(true);
-    setUrlId(''); 
+    setUrlId('');
     setMessage("")
     try {
       const response = await axios.post('https://url-shortener-yj9n.onrender.com/submitUrl', { url });
       setUrlId(response.data.urlId);
     } catch (error) {
       let errorMessage = 'An unexpected error occurred. Please try again.';
-      if(error.response.data.message){
+      if (error.response.data.message) {
         errorMessage = error.response.data.message;
       }
       setMessage(errorMessage);
@@ -24,17 +24,18 @@ function InputComponent() {
       });
       console.error('Error submitting URL:', error);
     }
-    setLoading(false); 
-    setUrl(''); 
+    setLoading(false);
+    setUrl('');
   };
   if (message) {
     toast.error(message, {
-        position: "top-right"
-    });}
+      position: "top-right"
+    });
+  }
   return (
-    <div className='flex flex-col w-72 sm:w-[34rem] rounded-lg border-2 bg-neutral-300 justify-center items-center h-60 sm:h-72 gap-4'>
+    <div className='flex flex-col w-72 sm:w-[34rem] rounded-lg border-2 bg-neutral-300 justify-start items-center min-h-[20rem]  gap-4'>
       <div className='flex gap-4 flex-col'>
-        <h2 className='text-2xl font-semibold self-start'>Enter URL</h2>
+        <h2 className='text-2xl font-semibold self-start pt-4'>Enter URL</h2>
         <input
           type='text'
           value={url}
@@ -48,7 +49,7 @@ function InputComponent() {
         {loading ? 'URL ID: Loading...' : urlId ? `URL ID: ${urlId}` : ''}
       </div>
       <div className='text-md text-red-500 h-3'>
-        {message && (message) }
+        {message && (message)}
       </div>
       <button
         className='h-10 w-40 rounded-lg bg-slate-900 text-white text-xl font-semibold'
@@ -56,6 +57,21 @@ function InputComponent() {
       >
         Submit
       </button>
+      {urlId && (
+        <div className='mt-4 p-2 border-2 rounded-lg bg-white w-full text-center'>
+          <p className='text-md font-semibold text-slate-800'>
+            Your short URL for this website is:
+          </p>
+          <a
+            href={`https://url-shortener-yj9n.onrender.com/${urlId}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className='text-blue-600 underline break-all'
+          >
+            https://url-shortener-yj9n.onrender.com/{urlId}
+          </a>
+        </div>
+      )}
     </div>
   );
 }
